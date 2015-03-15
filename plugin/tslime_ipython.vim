@@ -108,5 +108,3 @@ def slime_cell(move_to_next=DEFAULT_MOVE_TO_NEXT, delimit_cell_by=DEFAULT_DELIMI
 		vim.current.window.cursor = (next_cell_start, 0)
 
 EOF
-
-noremap <C-b> :python slime_cell() <CR>
