@@ -14,7 +14,7 @@ from re import escape
 DEFAULT_VALID_MARKS = 'abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 # The default way of delimiting cells, either 'marks' or 'tags'
-DEFAULT_DELIMIT_CELL_BY = 'marks'
+DEFAULT_DELIMIT_CELL_BY = 'tags'
 
 # Default tag to use if delimiting by tags is set.
 DEFAULT_TAG = '##'
