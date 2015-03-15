@@ -6,6 +6,7 @@ python << EOF
 
 import vim
 from re import escape
+from subprocess import Popen, PIPE
 
 # CONFIGURATION
 # -------------
@@ -28,7 +29,7 @@ def get_cell_by_tags(cur_row, tag):
 	# find the start of the cell
 	cell_start = cur_row
 	while cell_start > 1:
-		if vim.current.buffer[cell_start-1].strip() == tag:
+		if tag in vim.current.buffer[cell_start-1]:
 			break
 		else:
 			cell_start -= 1
@@ -39,7 +40,7 @@ def get_cell_by_tags(cur_row, tag):
 	else:
 		cell_end = cur_row+1
 		while cell_end < len(vim.current.buffer):
-			if vim.current.buffer[cell_end-1].strip() == tag:
+			if tag in vim.current.buffer[cell_end-1]:
 				cell_end -= 1
 				break
 			else:
@@ -86,22 +87,14 @@ def slime_cell(move_to_next=DEFAULT_MOVE_TO_NEXT, delimit_cell_by=DEFAULT_DELIMI
 	# get the contents of the cell
 	cell = vim.current.buffer[cell_start-1:cell_end]
 
-	"""
-	There is a bug (feature?) is ipython or tslime which only copies 50 lines at a time.
-	We therefore break the cell up into chunks of 25 lines and send these chunks one at a time
-	"""
-	while cell:
-		chunk = cell[:25]
-		cell[:25] = []
+	cell_as_string = '\n'.join(cell)
 
-		# join with a newline and escape
-		chunk_as_string = escape('\n'.join(chunk))
+	# put into system clipboard
+	p = Popen(['xsel', '-bi'], stdin=PIPE)
+	p.communicate(input=cell_as_string)
 
-		# format the string for ipython's cpaste functionality
-		chunk_as_string = "%cpaste\n" + chunk_as_string + "\n--\n"
-		
-		# send to tmux window
-		vim.command('call Send_to_Tmux("%s")' % chunk_as_string)
+    # paste into iPython
+	vim.command('call Send_to_Tmux("%paste -q\n")')
 
 	# move the cursor to the next cell
 	if move_to_next:
