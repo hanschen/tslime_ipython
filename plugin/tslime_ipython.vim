@@ -20,7 +20,7 @@ DEFAULT_DELIMIT_CELL_BY = 'tags'
 DEFAULT_TAG = '##'
 
 # Whether or not to move to the next cell after sending the current one.
-DEFAULT_MOVE_TO_NEXT = True
+DEFAULT_MOVE_TO_NEXT = False
 
 # -------------
 
