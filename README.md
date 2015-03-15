@@ -1,5 +1,10 @@
 tslime_ipython
 ==============
+The biggest change in this fork compared to the original plugin is that instead of seding the code to ipython,
+this forked plugin will copy the copy to the system clipboard with `xsel` and then let ipython evaluate the code
+using `paste -q`. This allows for a much cleaner output in the ipython command window.
+
+Obviously you need `xsel` for this to work.
 
 tslime_ipython is a vim plugin to send cells of code from vim to ipython using tslime. This attempts to bring some of the benefits of
 the IPython notebook's cells to vim. For example, if my code looks like the following, with marks on lines 3 and 4:
