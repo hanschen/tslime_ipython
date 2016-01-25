@@ -100,4 +100,15 @@ def slime_cell(move_to_next=DEFAULT_MOVE_TO_NEXT, delimit_cell_by=DEFAULT_DELIMI
 	if move_to_next:
 		vim.current.window.cursor = (next_cell_start, 0)
 
+def run():
+    current_file = vim.current.buffer.name
+    command = '%run ' + current_file + '\n'
+    vim.command('call Send_to_Tmux("{0}")'.format(command))
+
+def clear():
+	vim.command('call Send_to_Tmux("%clear \n")')
+
+def closeall():
+	vim.command('call Send_to_Tmux("plt.close(\'all\') \n")')
+
 EOF
